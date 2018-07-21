@@ -1,0 +1,26 @@
+<h1>Film Site</h1>
+<h2>Films List</h2>
+<div *ngIf='!selected'>
+  <div *ngFor='let film of films'>
+    <h4 (click)='displayFilm(film)'>{{film.title}}</h4>
+  </div>
+</div>
+<div *ngIf='selected'>
+  <h4>{{selected.title}}</h4>
+  <p><b>Description: </b>{{selected.description}}</p>
+  <p><b>Release Year: </b>{{selected.releaseYear}}</p>
+  <p><b>Rental Rate: </b>{{selected.rentalRate}}</p>
+  <p><b>Length: </b>{{selected.length}}</p>
+  <p><b>Replacement Cost: </b>{{selected.replacementCost}}</p>
+  <p><b>Rating: </b>{{selected.rating}}</p>
+  <p><b>Language: </b>{{selected.language}}</p>
+  <table>
+    <thead><b>Actors</b></thead>
+    <tbody>
+      <tr *ngFor='let actor of selected.actors'>
+        <td>{{actor.firstName}} {{actor.lastName}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <button (click)='selected = null'>Back</button>
+</div>
