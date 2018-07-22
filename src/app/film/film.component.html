@@ -20,7 +20,7 @@
 
   </form>
 </div>
-<div *ngIf='selected'>
+<div *ngIf='selected && !editFilm'>
   <h4>{{selected.title}}</h4>
   <p><b>Description: </b>{{selected.description}}</p>
   <p><b>Release Year: </b>{{selected.releaseYear}}</p>
@@ -38,4 +38,22 @@
     </tbody>
   </table>
   <button (click)='selected = null'>Back</button>
+  <button (click)='setEditFilm()'>Edit</button>
+  <button (click)='deleteFilm()'>Delete</button>
+</div>
+<div *ngIf='editFilm'>
+  <h4>Edit Film</h4>
+  <form name="editFilmForm">
+    <input type="text" name="title" [(ngModel)]="editFilm.title">
+    <input type="text" name="description" [(ngModel)]="editFilm.description">
+    <input type="text" name="releaseYear" [(ngModel)]="editFilm.releaseYear">
+    <input type="text" name="rentalRate" [(ngModel)]="editFilm.rentalRate">
+    <input type="text" name="length" [(ngModel)]="editFilm.length">
+    <input type="text" name="replacementCost" [(ngModel)]="editFilm.replacementCost">
+    <input type="text" name="rating" [(ngModel)]="editFilm.rating">
+    <input type="text" name="language" [(ngModel)]="editFilm.language">
+    <button (click)="editFilm = null">Cancel</button>
+    <button (click)="updateFilm(editFilm)">Save</button>
+
+  </form>
 </div>
