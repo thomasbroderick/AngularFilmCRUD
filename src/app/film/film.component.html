@@ -5,6 +5,21 @@
     <h4 (click)='displayFilm(film)'>{{film.title}}</h4>
   </div>
 </div>
+<div *ngIf='!selected'>
+  <h4>Create a New Film</h4>
+  <form name="newFilmForm">
+    <input type="text" name="title" placeholder="Title" [(ngModel)]="newFilm.title">
+    <input type="text" name="description" placeholder="Description" [(ngModel)]="newFilm.description">
+    <input type="text" name="releaseYear" placeholder="Release Year" [(ngModel)]="newFilm.releaseYear">
+    <input type="text" name="rentalRate" placeholder="Rental Rate" [(ngModel)]="newFilm.rentalRate">
+    <input type="text" name="length" placeholder="Length" [(ngModel)]="newFilm.length">
+    <input type="text" name="replacementCost" placeholder="Replacement Cost" [(ngModel)]="newFilm.replacementCost">
+    <input type="text" name="rating" placeholder="Rating" [(ngModel)]="newFilm.rating">
+    <input type="text" name="language" placeholder="Language" [(ngModel)]="newFilm.language">
+    <input type="submit" name="newFilmSubmit" (click)="addFilm()">
+
+  </form>
+</div>
 <div *ngIf='selected'>
   <h4>{{selected.title}}</h4>
   <p><b>Description: </b>{{selected.description}}</p>

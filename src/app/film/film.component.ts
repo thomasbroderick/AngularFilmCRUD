@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FilmComponent implements OnInit {
   selected = null;
+  newFilm: Film = new Film();
   films = [
     new Film(
       1,
@@ -26,6 +27,11 @@ export class FilmComponent implements OnInit {
 
   displayFilm(film) {
   this.selected = film;
+  }
+
+  addFilm() {
+    this.films.push(this.newFilm);
+    this.newFilm = new Film();
   }
 
   constructor() {}
