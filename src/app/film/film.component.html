@@ -1,11 +1,11 @@
 <h1>Film Site</h1>
 <h2>Films List</h2>
-<div *ngIf='!selected'>
+<div *ngIf='!selectedFilm'>
   <div *ngFor='let film of films'>
     <h4 (click)='displayFilm(film)'>{{film.title}}</h4>
   </div>
 </div>
-<div *ngIf='!selected'>
+<div *ngIf='!selectedFilm'>
   <h4>Create a New Film</h4>
   <form name="newFilmForm">
     <input type="text" name="title" placeholder="Title" [(ngModel)]="newFilm.title">
@@ -20,24 +20,33 @@
 
   </form>
 </div>
-<div *ngIf='selected && !editFilm'>
-  <h4>{{selected.title}}</h4>
-  <p><b>Description: </b>{{selected.description}}</p>
-  <p><b>Release Year: </b>{{selected.releaseYear}}</p>
-  <p><b>Rental Rate: </b>{{selected.rentalRate}}</p>
-  <p><b>Length: </b>{{selected.length}}</p>
-  <p><b>Replacement Cost: </b>{{selected.replacementCost}}</p>
-  <p><b>Rating: </b>{{selected.rating}}</p>
-  <p><b>Language: </b>{{selected.language}}</p>
+<div *ngIf='selectedFilm && !editFilm'>
+  <h4>{{selectedFilm.title}}</h4>
+  <p>
+    <b>Description: </b>{{selectedFilm.description}}</p>
+  <p>
+    <b>Release Year: </b>{{selectedFilm.releaseYear}}</p>
+  <p>
+    <b>Rental Rate: </b>{{selectedFilm.rentalRate}}</p>
+  <p>
+    <b>Length: </b>{{selectedFilm.length}}</p>
+  <p>
+    <b>Replacement Cost: </b>{{selectedFilm.replacementCost}}</p>
+  <p>
+    <b>Rating: </b>{{selectedFilm.rating}}</p>
+  <p>
+    <b>Language: </b>{{selectedFilm.language}}</p>
   <table>
-    <thead><b>Actors</b></thead>
+    <thead>
+      <b>Actors</b>
+    </thead>
     <tbody>
-      <tr *ngFor='let actor of selected.actors'>
+      <tr *ngFor='let actor of selectedFilm.actors'>
         <td>{{actor.firstName}} {{actor.lastName}}</td>
       </tr>
     </tbody>
   </table>
-  <button (click)='selected = null'>Back</button>
+  <button (click)='selectedFilm = null'>Back</button>
   <button (click)='setEditFilm()'>Edit</button>
   <button (click)='deleteFilm()'>Delete</button>
 </div>
@@ -54,6 +63,43 @@
     <input type="text" name="language" [(ngModel)]="editFilm.language">
     <button (click)="editFilm = null">Cancel</button>
     <button (click)="updateFilm(editFilm)">Save</button>
+  </form>
+</div>
+
+<h2>Actors List</h2>
+<div *ngIf='!selectedActor'>
+  <div *ngFor='let actor of actors'>
+    <h4 (click)='displayActor(actor)'>{{actor.firstName}} {{actor.lastName}}</h4>
+  </div>
+</div>
+<div *ngIf='!selectedActor'>
+  <h4>Create a New Actor</h4>
+  <form name="newActorForm">
+    <input type="text" name="firstName" placeholder="First Name" [(ngModel)]="newActor.firstName">
+    <input type="text" name="lastName" placeholder="Last Name" [(ngModel)]="newActor.lastName">
+
+    <input type="submit" name="newActorSubmit" (click)="addActor()">
 
   </form>
+</div>
+<div *ngIf='selectedActor && !addingToFilm'>
+  <h4>{{selectedActor.firstName}} {{selectedActor.lastName}}</h4>
+  <table>
+    <thead>
+      <b>Films</b>
+    </thead>
+    <tbody>
+      <tr *ngFor='let film of selectedActor.films'>
+        <td>{{film.title}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <button (click)='selectedActor = null'>Back</button>
+  <button (click)='deleteActor()'>Delete</button>
+  <button (click)='addingToFilm = true'>Add to Film</button>
+</div>
+<div *ngIf='addingToFilm'>
+  <ul>
+    <li *ngFor='let film of films' (click)='addActorToFilm(selectedActor, film)'>{{film.title}}</li>
+  </ul>
 </div>

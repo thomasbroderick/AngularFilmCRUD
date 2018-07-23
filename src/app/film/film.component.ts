@@ -8,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./film.component.css']
 })
 export class FilmComponent implements OnInit {
-  selected = null;
+  selectedFilm = null;
   newFilm: Film = new Film();
   editFilm = null;
+  selectedActor = null;
+  newActor: Actor = new Actor();
+  addingToFilm = false;
+
   films = [
     new Film(
       1,
@@ -26,8 +30,10 @@ export class FilmComponent implements OnInit {
     )
   ];
 
+  actors = [new Actor(1, 'James', 'Bond'), new Actor(2, 'Austin', 'Powers')];
+
   displayFilm(film) {
-  this.selected = film;
+    this.selectedFilm = film;
   }
 
   addFilm() {
@@ -37,14 +43,19 @@ export class FilmComponent implements OnInit {
   }
 
   setEditFilm() {
-    console.log(this.selected);
-    this.editFilm = Object.assign({}, this.selected);
+    console.log(this.selectedFilm);
+    this.editFilm = Object.assign({}, this.selectedFilm);
     console.log(this.editFilm);
   }
 
   generateId() {
     return this.films[this.films.length - 1].id + 1;
   }
+
+  generateActorId() {
+    return this.actors[this.actors.length - 1].id + 1;
+  }
+
 
   updateFilm(film) {
     const id = film.id - 1;
@@ -57,13 +68,37 @@ export class FilmComponent implements OnInit {
     this.films[id].rating = film.rating;
     this.films[id].language = film.language;
     this.editFilm = null;
-
   }
 
   deleteFilm() {
-    const id = this.selected.id - 1;
+    const id = this.selectedFilm.id - 1;
     this.films.splice(id, 1);
-    this.selected = null;
+    this.selectedFilm = null;
+  }
+
+  displayActor(actor) {
+    this.selectedActor = actor;
+  }
+
+  addActor() {
+    this.newActor.id = this.generateActorId();
+    this.actors.push(this.newActor);
+    this.newActor = new Actor();
+  }
+
+  deleteActor() {
+    const id = this.selectedActor.id - 1;
+    this.actors.splice(id, 1);
+    this.selectedActor = null;
+  }
+
+  nextFilmLoc() {
+    return this.selectedActor.films.length;
+  }
+
+  addActorToFilm(actor, film) {
+    film.actors.push(actor);
+    this.addingToFilm = false;
   }
 
   constructor() {}
